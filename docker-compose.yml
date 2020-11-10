@@ -1,0 +1,27 @@
+version: "3.4"
+
+services:
+  todoapi:
+    depends_on:
+      - "postgres"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+      DB_CONNECTION_STRING: "host=postgres;port=5432;database=tododb;username=todouser;password=todouser"
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: todouser
+      POSTGRES_PASSWORD: todouser
+      POSTGRES_DB: tododb
+volumes:
+  db_volume:
+    
