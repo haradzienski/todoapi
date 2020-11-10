@@ -6,7 +6,6 @@ services:
       - "postgres"
     build:
       context: .
-      dockerfile: Dockerfile
     ports:
       - "8000:80"
     environment:
@@ -17,11 +16,10 @@ services:
       - "5432:5432"
     restart: always
     volumes:
-      - db_volume:/var/lib/postgresql/data
+      - ./tmp/data:/var/lib/postgresql/data
+      - ./postgres/seed.sql:/docker-entrypoint-initdb.d/seed.sql
     environment:
       POSTGRES_USER: todouser
       POSTGRES_PASSWORD: todouser
       POSTGRES_DB: tododb
-volumes:
-  db_volume:
     
